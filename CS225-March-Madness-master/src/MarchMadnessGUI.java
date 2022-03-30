@@ -30,6 +30,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -326,7 +327,7 @@ public class MarchMadnessGUI extends Application {
         loginPane.setVgap(10);
         loginPane.setPadding(new Insets(5, 5, 5, 5));
 
-        Text welcomeMessage = new Text("March Madness Login Welcome");
+        Text welcomeMessage = new Text("March Madness Login");
         loginPane.add(welcomeMessage, 0, 0, 2, 1);
 
         Label userName = new Label("User Name: ");
@@ -348,15 +349,32 @@ public class MarchMadnessGUI extends Application {
         Label message = new Label();
         loginPane.add(message, 1, 5);
 
+        /**
+         * Jovan Rodriguez
+         * code to greet the player with a welcome message that gives the user a brief description of the game.
+         */
+        Alert.AlertType type = Alert.AlertType.INFORMATION;
+        Alert alert = new Alert(type, "");
+
+        alert.initModality(Modality.APPLICATION_MODAL);
+
+        alert.getDialogPane().setContentText("This program will allow you to simulate March Madness, the series of " +
+                "college basketball games. If you have not already created a profile, entering a name and a" +
+                " password shall create a new account with that name and password. If you already have an account," +
+                " you can enter your information to come back to your saved bracket. Once in the game, you will" +
+                " be able to create your own bracket and then finalize it to simulate the series.\n\nPress OK to" +
+                " continue");
+
+        alert.getDialogPane().setHeaderText("Welcome!");
+
+        alert.showAndWait(); //Displays an alert window for the user
+
         signButton.setOnAction(event -> {
 
             // the name user enter
             String name = enterUser.getText();
             // the password user enter
             String playerPass = passwordField.getText();
-
-        
-          
             
             if (playerMap.get(name) != null) {
                 //check password of user
