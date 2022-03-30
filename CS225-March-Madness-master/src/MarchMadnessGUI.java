@@ -143,6 +143,12 @@ public class MarchMadnessGUI extends Application {
        for(Bracket b:playerBrackets){
            scoreBoard.addPlayer(b,b.scoreBracket(simResultBracket));
        }
+
+       /**
+        * Displays the winner amongst the players
+        * @author Jovan Rodriguez
+        */
+        scoreBoard.showWinner();
         
         displayPane(table);
     }
@@ -350,8 +356,8 @@ public class MarchMadnessGUI extends Application {
         loginPane.add(message, 1, 5);
 
         /**
-         * Jovan Rodriguez
-         * code to greet the player with a welcome message that gives the user a brief description of the game.
+         *code to greet the player with a welcome message that gives the user a brief description of the game.
+         * @author Jovan Rodriguez
          */
         Alert.AlertType type = Alert.AlertType.INFORMATION;
         Alert alert = new Alert(type, "");
