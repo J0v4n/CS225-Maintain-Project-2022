@@ -362,11 +362,6 @@ public class BracketPane extends BorderPane {
 
                 public Root(int location) {
                         this.location = location;
-                        /**
-                         * @author: Carlos Rodriguez
-                         * Hard-coded the values of createVertices from
-                         * 100 to 105 to make the labels more "centered"
-                         */
                         createVertices(420, 200, 100, 20, 0, 0);
                         createVertices(320, 119, 100, 200, 1, 0);
                         createVertices(220, 60, 100, 100, 2, 200);
