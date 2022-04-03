@@ -1,3 +1,4 @@
+
 import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Point2D;
@@ -263,7 +264,7 @@ public class BracketPane extends BorderPane {
          * @param position The position to clear after
          */
         public void clearSubtree(int position) {
-                currentBracket.resetSubtree(position);
+        		currentBracket.resetSubtree(position);
         }
 
         /**
@@ -381,9 +382,15 @@ public class BracketPane extends BorderPane {
                 private void createVertices(int iX, int iY, int iXO, int iYO, int num, int increment) {
                         int y = iY;
                         if (num == 0 && increment == 0) {
-                                BracketNode last = new BracketNode("", iX, y - 20, iXO, 20);
+                        	/** @author: Carlos Rodriguez
+                             *  Hard-coded values of the lines to fit all the names
+                             *  for the final 4
+                             *  Change: last (iX to iX + 20)
+                             *  		getChildren(iX to iX + 15)
+                             */
+                                BracketNode last = new BracketNode("", iX + 20, y - 20, iXO, 20);
                                 nodes.add(last);
-                                getChildren().addAll(new Line(iX, iY, iX + iXO, iY), last);
+                                getChildren().addAll(new Line(iX + 15, iY, (iX + iXO), iY), last);
                                 last.setName(currentBracket.getBracket().get(location));
                                 bracketMap.put(last, location);
                                 nodeMap.put(location, last);
@@ -394,15 +401,31 @@ public class BracketPane extends BorderPane {
                                         Point2D tr = new Point2D(iX + iXO, y);
                                         Point2D bl = new Point2D(iX, y + iYO);
                                         Point2D br = new Point2D(iX + iXO, y + iYO);
-                                        BracketNode nTop = new BracketNode("", iX, y - 20, iXO, 20);
+                                        /** @author: Carlos Rodriguez
+                                         *  Hard-coded values of the lines to fit all the names
+                                         *  Change: nTop iX to iX + 11
+                                         *  		nBottom iX to iX + 12
+                                         */
+                                        BracketNode nTop = new BracketNode("", iX + 11, y - 20, iXO, 20);
                                         aNodeList.add(nTop);
                                         nodes.add(nTop);
-                                        BracketNode nBottom = new BracketNode("", iX, y + (iYO - 20), iXO, 20);
+                                        BracketNode nBottom = new BracketNode("", iX + 11, y + (iYO - 20), iXO, 20);
                                         aNodeList.add(nBottom);
                                         nodes.add(nBottom);
-                                        Line top = new Line(tl.getX(), tl.getY(), tr.getX(), tr.getY());
-                                        Line bottom = new Line(bl.getX(), bl.getY(), br.getX(), br.getY());
-                                        Line right = new Line(tr.getX(), tr.getY(), br.getX(), br.getY());
+                                        /** @author: Carlos Rodriguez
+                                         *  Hard-coded values of the lines to fit all the names
+                                         *  Change: top tl.getX to tl.getX + 15, tr.getX to tr.getX + 15
+                                         *  		bottom bl.getX to bl.getX + 15, br.getX to br.getX + 15 
+                                         */
+                                        Line top = new Line(tl.getX() + 15, tl.getY(), tr.getX() + 15, tr.getY());
+                                        Line bottom = new Line(bl.getX() + 15, bl.getY(), br.getX() + 15, br.getY());
+                                        
+                                        /** @author: Carlos Rodriguez
+                                         *  Hard-coded values of the lines to fit all the names
+                                         *  Change: right tr.getX to tr.getX + 15
+                                         *  		right br.getX to br.getX + 15 
+                                         */
+                                        Line right = new Line(tr.getX() + 15, tr.getY(), br.getX() + 15, br.getY());
                                         getChildren().addAll(top, bottom, right, nTop, nBottom);
                                         isTop = !isTop;
                                         y += increment;
@@ -442,7 +465,13 @@ public class BracketPane extends BorderPane {
                         this.setLayoutY(y);
                         this.setMaxSize(rX, rY);
                         this.teamName = teamName;
-                        rect = new Rectangle(rX, rY);
+                        /**
+                         * @author: Carlos Rodriguez
+                         * Hard-coded the rectangle's shadow to cover
+                         * the whole label for better display
+                         * (change: rx to rx + 5)
+                         */
+                        rect = new Rectangle(rX + 5, rY);
                         rect.setFill(Color.TRANSPARENT);
                         name = new Label(teamName);
                         // setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);

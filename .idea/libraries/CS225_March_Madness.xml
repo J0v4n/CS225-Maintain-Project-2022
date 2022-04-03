@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="CS225-March-Madness">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/CS225-March-Madness-master/src/CS225-March-Madness.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -3,10 +3,15 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
 import javafx.util.Callback;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -24,6 +29,9 @@ public class ScoreBoardTable {
     private static final int MAX_PLAYER_NUMBER = 16;
     private TableView<Bracket> table;
     private ObservableList<Bracket> data;
+    //ArrayList and Map for finding and displaying the winner, added by Jovan
+    private ArrayList<Integer> scoreList;
+    private Map<String, Integer> names;
 
     /**
      * ScoreBoardPane constructor
@@ -33,6 +41,9 @@ public class ScoreBoardTable {
         table = new TableView<>();
         data = FXCollections.observableArrayList();
         scores = new HashMap<>();
+        scoreList = new ArrayList<>();
+        names = new HashMap<>();
+
 
         /**
          * TableColumn userNameCol is the column on the left side of the table.
@@ -98,7 +109,11 @@ public class ScoreBoardTable {
                 scores.put(name, score);
                 data.add(name);
                 table.sort();
-                //System.out.println("added: " + name.getPlayerName() + " " + score);
+
+                //putting the scores and player names into the arrayList and hashMap, added by Jovan
+                scoreList.add(score);
+                names.put(name.getPlayerName(), score);
+
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -109,5 +124,38 @@ public class ScoreBoardTable {
     public void clearPlayers() {
         scores = new HashMap<Bracket, Integer>();
         data = FXCollections.observableArrayList();
+    }
+
+    /**
+     * method for announcing the winner of the game
+     * @author Jovan Rodriguez
+     */
+    public void showWinner(){
+        int max = 0;
+
+        //calculating the highest player score
+        for(Integer i : scoreList){
+            if(max < i){
+                max = i;
+            }
+        }
+
+        //iterating through names to find which player has the highest score
+        for (Map.Entry temp : names.entrySet()) {
+            if(temp.getValue().equals(max)){ //if branch to display winner's name upon finding highest score
+                Alert.AlertType type = Alert.AlertType.INFORMATION;
+                Alert alert = new Alert(type, "");
+
+                alert.initModality(Modality.APPLICATION_MODAL);
+
+                alert.getDialogPane().setContentText("The winner is " + temp.getKey().toString() + "!");
+
+                alert.getDialogPane().setHeaderText("Winner!");
+
+                alert.show(); //Displays an alert window for the user
+            }
+        }
+
+
     }
 }

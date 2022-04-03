@@ -14,22 +14,15 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -142,6 +135,12 @@ public class MarchMadnessGUI extends Application {
        for(Bracket b:playerBrackets){
            scoreBoard.addPlayer(b,b.scoreBracket(simResultBracket));
        }
+
+       /**
+        * Displays the winner amongst the players
+        * @author Jovan Rodriguez
+        */
+        scoreBoard.showWinner();
         
         displayPane(table);
     }
@@ -326,13 +325,20 @@ public class MarchMadnessGUI extends Application {
         loginPane.setVgap(10);
         loginPane.setPadding(new Insets(5, 5, 5, 5));
 
-        Text welcomeMessage = new Text("March Madness Login Welcome");
+        Text welcomeMessage = new Text("March Madness Login");
         loginPane.add(welcomeMessage, 0, 0, 2, 1);
 
         Label userName = new Label("User Name: ");
         loginPane.add(userName, 0, 1);
 
-        TextField enterUser = new TextField();
+        /**
+         * Changing enterUser from a TextField to a ComboBox for adding the dropdown menu
+         */
+        ComboBox<String> enterUser = new ComboBox<String>();
+        enterUser.setEditable(true);
+
+        comboadd(enterUser); //adding all saved player names to enterUser
+
         loginPane.add(enterUser, 1, 1);
 
         Label password = new Label("Password: ");
@@ -348,15 +354,32 @@ public class MarchMadnessGUI extends Application {
         Label message = new Label();
         loginPane.add(message, 1, 5);
 
+        /**
+         *code to greet the player with a welcome message that gives the user a brief description of the game.
+         * @author Jovan Rodriguez
+         */
+        Alert.AlertType type = Alert.AlertType.INFORMATION;
+        Alert alert = new Alert(type, "");
+
+        alert.initModality(Modality.APPLICATION_MODAL);
+
+        alert.getDialogPane().setContentText("This program will allow you to simulate March Madness, the series of " +
+                "college basketball games. If you have not already created a profile, entering a name and a" +
+                " password shall create a new account with that name and password. If you already have an account," +
+                " you can enter your information to come back to your saved bracket. Once in the game, you will" +
+                " be able to create your own bracket and then finalize it to simulate the series.\n\nPress OK to" +
+                " continue");
+
+        alert.getDialogPane().setHeaderText("Welcome!");
+
+        alert.showAndWait(); //Displays an alert window for the user
+
         signButton.setOnAction(event -> {
 
             // the name user enter
-            String name = enterUser.getText();
+            String name = enterUser.getValue();
             // the password user enter
             String playerPass = passwordField.getText();
-
-        
-          
             
             if (playerMap.get(name) != null) {
                 //check password of user
@@ -399,7 +422,7 @@ public class MarchMadnessGUI extends Application {
      */
     private void addAllToMap(){
         for(Bracket b:playerBrackets){
-            playerMap.put(b.getPlayerName(), b);   
+            playerMap.put(b.getPlayerName(), b);
         }
     }
     
@@ -516,6 +539,23 @@ public class MarchMadnessGUI extends Application {
             }
         }
         return list;
+    }
+
+    /**
+     * code from loadBrackets(), repurposed for adding to enterUser combobox
+     * @author Jovan Rodriguez
+     */
+    public void comboadd(ComboBox<String> box){
+        ArrayList<Bracket> list=new ArrayList<Bracket>();
+        File dir = new File(".");
+        for (final File fileEntry : dir.listFiles()){
+            String fileName = fileEntry.getName();
+            String extension = fileName.substring(fileName.lastIndexOf(".")+1);
+
+            if (extension.equals("ser")){
+                box.getItems().add(fileName.substring(0, fileName.length()-4));
+            }
+        }
     }
        
 }
