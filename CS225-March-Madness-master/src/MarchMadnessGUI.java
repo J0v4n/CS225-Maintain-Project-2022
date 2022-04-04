@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -125,6 +127,7 @@ public class MarchMadnessGUI extends Application {
      */
     private void simulate(){
         //cant login and restart prog after simulate
+    	
         login.setDisable(true);
         simulate.setDisable(true);
         
@@ -170,13 +173,43 @@ public class MarchMadnessGUI extends Application {
       * Displays Simulated Bracket
       * 
       */
-    private void viewBracket(){
+	@SuppressWarnings("static-access")
+	private void viewBracket(){
        selectedBracket=simResultBracket;
        bracketPane=new BracketPane(selectedBracket);
+       
        GridPane full = bracketPane.getFullPane();
-       full.setAlignment(Pos.CENTER);
        full.setDisable(true);
-       displayPane(new ScrollPane(full)); 
+       /**
+        * @author: Carlos Rodriguez
+        * Adding the previous implemented full pane
+        * to a new Pane that is enabled to show a
+        * tooltip based on the winner of the simulation
+        */
+       Pane aPane = new Pane(full);
+
+       	/**
+       	 * Tries retrieving info of the tournament, gets
+       	 * the winner and installs the tooltip to the
+       	 * Team instance.
+       	 * 
+       	 * Catches an exception of input output and shows
+       	 * an alert.
+       	 */
+		try {
+			TournamentInfo info = new TournamentInfo();
+			Team winner = info.getTeam(selectedBracket.getBracket().get(0).toString());
+			Tooltip aTT = new Tooltip();
+		    aTT.setText("Championship Winner: " + winner.getName() + 
+		    		"\nThe '" + winner.getNickname() + "' get crowned after" + 
+		    		"\na long and disputed tournament. Congrats!");
+		    Tooltip.install(aPane, aTT);
+		    displayPane(new ScrollPane(aPane));
+		} catch (IOException e) {
+			Alert anAlert = new Alert(Alert.AlertType.INFORMATION);
+			anAlert.getDialogPane().setContentText("Information was not found!");
+		}
+       
     }
     
     /**
@@ -231,10 +264,7 @@ public class MarchMadnessGUI extends Application {
             displayPane(bracketPane);
         
        }
-       //bracketPane=new BracketPane(selectedBracket);
-      
-      
-        
+       //bracketPane=new BracketPane(selectedBracket);  
     }
     
     
