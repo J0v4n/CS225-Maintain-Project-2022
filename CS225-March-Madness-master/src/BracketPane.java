@@ -494,4 +494,8 @@ public class BracketPane extends BorderPane {
                         name.setText(teamName);
                 }
         }
+
+        public int getDisplayedSubtree(){
+                return displayedSubtree;
+        }
 }
