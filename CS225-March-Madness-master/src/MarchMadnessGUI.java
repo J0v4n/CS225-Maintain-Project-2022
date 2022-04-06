@@ -27,6 +27,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+
 /**
  *  MarchMadnessGUI
  * 
@@ -49,6 +51,12 @@ public class MarchMadnessGUI extends Application {
     private Button clearButton;
     private Button resetButton;
     private Button finalizeButton;
+
+    //Button that will let the user navigate to a page that would display all the scores of the teams in the brackets -JL
+    private Button teamScores;
+
+    //Button that would allow the user to logout of the account that is in use -JL
+    private Button logout;
     
     //allows you to navigate back to division selection screen
     private Button back;
@@ -129,6 +137,7 @@ public class MarchMadnessGUI extends Application {
         //cant login and restart prog after simulate
     	
         login.setDisable(true);
+        logout.setDisable(true);
         simulate.setDisable(true);
         
        scoreBoardButton.setDisable(false);
@@ -154,6 +163,7 @@ public class MarchMadnessGUI extends Application {
      */
     private void login(){            
         login.setDisable(true);
+        logout.setDisable(false);
         simulate.setDisable(true);
         scoreBoardButton.setDisable(true);
         viewBracketButton.setDisable(true);
@@ -227,6 +237,7 @@ public class MarchMadnessGUI extends Application {
      * resets current selected sub tree
      * for final4 reset Ro2 and winner
      */
+    //Updated clear function so that it would correctly work in clearing the FULL bracket -JL
     private void clear(){
         if(bracketPane.getDisplayedSubtree() == 7){
             selectedBracket=new Bracket(startingBracket);
@@ -237,8 +248,6 @@ public class MarchMadnessGUI extends Application {
             bracketPane=new BracketPane(selectedBracket);
             displayPane(bracketPane);
         }
-
-        
     }
     
     /**
@@ -259,6 +268,7 @@ public class MarchMadnessGUI extends Application {
            bracketPane.setDisable(true);
            simulate.setDisable(false);
            login.setDisable(false);
+           logout.setDisable(true);
            //save the bracket along with account info
            seralizeBracket(selectedBracket);
             
@@ -288,6 +298,7 @@ public class MarchMadnessGUI extends Application {
      * Creates toolBar and buttons.
      * adds buttons to the toolbar and saves global references to them
      */
+    //added the logout and teamScores buttons to the toolbars -JL
     private void CreateToolBars(){
         toolBar  = new ToolBar();
         btoolBar  = new ToolBar();
@@ -298,6 +309,9 @@ public class MarchMadnessGUI extends Application {
         clearButton=new Button("Clear");
         resetButton=new Button("Reset");
         finalizeButton=new Button("Finalize");
+        teamScores = new Button("Team Scores");
+
+        logout = new Button("Logout");
         toolBar.getItems().addAll(
                 createSpacer(),
                 login,
@@ -312,8 +326,17 @@ public class MarchMadnessGUI extends Application {
                 resetButton,
                 finalizeButton,
                 back=new Button("Choose Division"),
+                teamScores,
+                logout,
                 createSpacer()
         );
+    }
+
+    //method attached to the logout button that will log the user out -JL
+    //Bug: user and password field not clearing upon use -JL
+    private void userLogout(){
+        seralizeBracket(selectedBracket);
+        login();
     }
     
    /**
@@ -331,6 +354,7 @@ public class MarchMadnessGUI extends Application {
             bracketPane=new BracketPane(selectedBracket);
             displayPane(bracketPane);
         });
+        logout.setOnAction(e->userLogout());
     }
     
     /**
