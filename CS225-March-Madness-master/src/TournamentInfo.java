@@ -41,7 +41,7 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
                 ranking = Integer.parseInt(br.readLine());
                 offensivePPG = Double.parseDouble(br.readLine());
                 defensivePPG = Double.parseDouble(br.readLine());
-                
+
                 Team newTeam = new Team(name, nickname, info, ranking, offensivePPG, defensivePPG); //creates team with info
 
                 br.readLine();   //gets rid of empty line between team infos
@@ -68,6 +68,17 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
     public Team getTeam(String teamName){
         return teams.get(teamName);
     }
+
+<<<<<<< HEAD
+		/**
+		 * @author: Arjun Bott
+		 * getter for teams HashMap
+		 */
+		public HashMap<String, Team> getTeams() {
+			return teams;
+		}
+=======
+>>>>>>> 2c4e05e63122f026004d6dbaf50215d3d21d1222
 
     /**
      * This will be the method that actually does the work of determining the outcome of the games.
@@ -124,7 +135,7 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
             while((name = br.readLine()) != null){
                 starting.add(name);
             }
-            
+
             br.close();
         }
         catch(IOException ioe){

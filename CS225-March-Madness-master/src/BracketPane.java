@@ -65,6 +65,20 @@ public class BracketPane extends BorderPane {
          */
         private HashMap<Integer, BracketNode> nodeMap = new HashMap<>();
 
+				/**
+				 * @author: Arjun Bott
+				 */
+				public void colorBracket(Bracket predictionBracket) {
+					// check to ensure that both brackets are of the same size
+					if (currentBracket.getBracket().size() != predictionBracket.getBracket().size()) return;
+
+					// iterate over all the places that can have more than 1 bracket in them, as well as the absolute winning place
+					for (int i = currentBracket.getBracket().size() - 65; i >= 0; i--) {
+						// color the bracket label according to if the prediction was correct by active the user
+						nodeMap.get(i).name.setStyle("-fx-text-fill: " + (currentBracket.getBracket().get(i).equals(predictionBracket.getBracket().get(i)) ? "green" : "red"));
+					}
+				}
+
         /**
          * Clears the entries of a team future wins
          *
@@ -77,14 +91,15 @@ public class BracketPane extends BorderPane {
                         clearAbove(nextTreeNum);
                 }
         }
-        
-        
+
+
         public void clear(){
             clearSubtree(displayedSubtree);
         }
 
         /**
          * Handles clicked events for BracketNode objects
+         * Edited by Arjun Bott
          */
         private EventHandler<MouseEvent> clicked = mouseEvent -> {
                 //conditional added by matt 5/7 to differentiate between left and right mouse click
@@ -92,7 +107,8 @@ public class BracketPane extends BorderPane {
                         BracketNode n = (BracketNode) mouseEvent.getSource();
                         int treeNum = bracketMap.get(n);
                         int nextTreeNum = (treeNum - 1) / 2;
-                        if (!nodeMap.get(nextTreeNum).getName().equals(n.getName())) {
+												int siblingNode = treeNum + (treeNum % 2 == 0 ? -1 : 1); // @author: Arjun Bott
+                        if (!(nodeMap.get(nextTreeNum).getName().equals(n.getName()) || nodeMap.get(siblingNode).getName().equals(""))) { // @author(Edited) Arjun Bott
                                 currentBracket.removeAbove((nextTreeNum));
                                 clearAbove(treeNum);
                                 nodeMap.get((bracketMap.get(n) - 1) / 2).setName(n.getName());
@@ -217,13 +233,13 @@ public class BracketPane extends BorderPane {
                         t.setOnMouseClicked(mouseEvent -> {
                                 setCenter(null);
                                 /**
-                                 * @update Grant & Tyler 
+                                 * @update Grant & Tyler
                                  * 			panes are added as ScrollPanes to retain center alignment when moving through full-view and region-view
                                  */
                                 center.add(new ScrollPane(panes.get(t)), 0, 0);
                                 center.setAlignment(Pos.CENTER);
                                 setCenter(center);
-                                //Grant 5/7 this is for clearing the tree it kind of works 
+                                //Grant 5/7 this is for clearing the tree it kind of works
                                 displayedSubtree=buttons.indexOf(t)==7?0:buttons.indexOf(t)+3;
                         });
                 }
@@ -415,15 +431,15 @@ public class BracketPane extends BorderPane {
                                         /** @author: Carlos Rodriguez
                                          *  Hard-coded values of the lines to fit all the names
                                          *  Change: top tl.getX to tl.getX + 15, tr.getX to tr.getX + 15
-                                         *  		bottom bl.getX to bl.getX + 15, br.getX to br.getX + 15 
+                                         *  		bottom bl.getX to bl.getX + 15, br.getX to br.getX + 15
                                          */
                                         Line top = new Line(tl.getX() + 15, tl.getY(), tr.getX() + 15, tr.getY());
                                         Line bottom = new Line(bl.getX() + 15, bl.getY(), br.getX() + 15, br.getY());
-                                        
+
                                         /** @author: Carlos Rodriguez
                                          *  Hard-coded values of the lines to fit all the names
                                          *  Change: right tr.getX to tr.getX + 15
-                                         *  		right br.getX to br.getX + 15 
+                                         *  		right br.getX to br.getX + 15
                                          */
                                         Line right = new Line(tr.getX() + 15, tr.getY(), br.getX() + 15, br.getY());
                                         getChildren().addAll(top, bottom, right, nTop, nBottom);
