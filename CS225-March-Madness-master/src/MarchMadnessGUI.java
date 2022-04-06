@@ -387,9 +387,7 @@ public class MarchMadnessGUI extends Application {
                 back=new Button("Choose Division"),
                 teamScores,
                 logout,
-
-                back = new Button("Choose Division"),
-								teamStats, //@author: Arjun Bott adding new button to toolbar
+				teamStats, //@author: Arjun Bott adding new button to toolbar
                 createSpacer()
         );
     }

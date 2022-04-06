@@ -42,9 +42,14 @@ public class TournamentTeamTable {
         teamDefensePPGCol.setMinWidth(200);
         teamDefensePPGCol.setCellValueFactory(new PropertyValueFactory<>("defensePPG"));
 
+        //sets up the information on the team column
+        TableColumn<Team, String> teamDescription = new TableColumn<>("Team Description");
+        teamDescription.setMinWidth(800);
+        teamDescription.setCellValueFactory(new PropertyValueFactory<>("info"));
+
         table = new TableView<>();
         table.setItems(teams);
-        table.getColumns().addAll(teamNameCol, teamNickNameCol, teamRankCol, teamOffensePPGCol, teamDefensePPGCol);
+        table.getColumns().addAll(teamNameCol, teamNickNameCol, teamRankCol, teamOffensePPGCol, teamDefensePPGCol, teamDescription);
 
     }
 
