@@ -89,6 +89,9 @@ public class MarchMadnessGUI extends Application {
     //TournamentTeamTable uses is not found
     private TournamentTeamTable teamStatsBoard = new TournamentTeamTable();
 
+    //the password field is declared here to make the logout button work correctly
+    private PasswordField passwordField;
+
     public MarchMadnessGUI() throws IOException {
     }
 
@@ -392,9 +395,9 @@ public class MarchMadnessGUI extends Application {
     }
 
     //method attached to the logout button that will log the user out -Justin Lamberson
-    //Bug: user and password field not clearing upon use -Justin Lamberson
     private void userLogout(){
         seralizeBracket(selectedBracket);
+        passwordField.setText("");
         login();
     }
 
@@ -468,7 +471,7 @@ public class MarchMadnessGUI extends Application {
         Label password = new Label("Password: ");
         loginPane.add(password, 0, 2);
 
-        PasswordField passwordField = new PasswordField();
+        passwordField = new PasswordField();
         loginPane.add(passwordField, 1, 2);
 
         Button signButton = new Button("Sign in");
