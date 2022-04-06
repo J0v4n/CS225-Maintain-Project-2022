@@ -52,10 +52,10 @@ public class MarchMadnessGUI extends Application {
     private Button resetButton;
     private Button finalizeButton;
 
-    //Button that will let the user navigate to a page that would display all the scores of the teams in the brackets -JL
+    //Button that will let the user navigate to a page that would display all the scores of the teams in the brackets -Justin Lamberson
     private Button teamScores;
 
-    //Button that would allow the user to logout of the account that is in use -JL
+    //Button that would allow the user to logout of the account that is in use -Justin Lamberson
     private Button logout;
     
     //allows you to navigate back to division selection screen
@@ -78,8 +78,16 @@ public class MarchMadnessGUI extends Application {
     private BracketPane bracketPane;
     private GridPane loginP;
     private TournamentInfo teamInfo;
-    
-    
+
+
+    //Placeholder constructor used to throw an exception if the file
+    //TournamentTeamTable uses is not found
+    private TournamentTeamTable teamStatsBoard = new TournamentTeamTable();
+
+    public MarchMadnessGUI() throws IOException {
+    }
+
+
     @Override
     public void start(Stage primaryStage) {
         //try to load all the files, if there is an error display it
@@ -237,7 +245,7 @@ public class MarchMadnessGUI extends Application {
      * resets current selected sub tree
      * for final4 reset Ro2 and winner
      */
-    //Updated clear function so that it would correctly work in clearing the FULL bracket -JL
+    //Updated clear function so that it would correctly work in clearing the FULL bracket -Justin Lamberson
     private void clear(){
         if(bracketPane.getDisplayedSubtree() == 7){
             selectedBracket=new Bracket(startingBracket);
@@ -298,7 +306,7 @@ public class MarchMadnessGUI extends Application {
      * Creates toolBar and buttons.
      * adds buttons to the toolbar and saves global references to them
      */
-    //added the logout and teamScores buttons to the toolbars -JL
+    //added the logout and teamScores buttons to the toolbars -Justin Lamberson
     private void CreateToolBars(){
         toolBar  = new ToolBar();
         btoolBar  = new ToolBar();
@@ -332,11 +340,15 @@ public class MarchMadnessGUI extends Application {
         );
     }
 
-    //method attached to the logout button that will log the user out -JL
-    //Bug: user and password field not clearing upon use -JL
+    //method attached to the logout button that will log the user out -Justin Lamberson
+    //Bug: user and password field not clearing upon use -Justin Lamberson
     private void userLogout(){
         seralizeBracket(selectedBracket);
         login();
+    }
+
+    private void displayTeamInfo(){
+        displayPane(teamStatsBoard.loadTable());
     }
     
    /**
@@ -355,6 +367,7 @@ public class MarchMadnessGUI extends Application {
             displayPane(bracketPane);
         });
         logout.setOnAction(e->userLogout());
+        teamScores.setOnAction(e->displayTeamInfo());
     }
     
     /**
