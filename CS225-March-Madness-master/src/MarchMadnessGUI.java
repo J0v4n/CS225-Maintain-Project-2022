@@ -53,8 +53,7 @@ public class MarchMadnessGUI extends Application {
     private Button resetButton;
     private Button finalizeButton;
 
-=======
-<<<<<<< HEAD
+
 
     //Button that will let the user navigate to a page that would display all the scores of the teams in the brackets -Justin Lamberson
     private Button teamScores;
@@ -62,7 +61,7 @@ public class MarchMadnessGUI extends Application {
     //Button that would allow the user to logout of the account that is in use -Justin Lamberson
     private Button logout;
 
->>>>>>> 2c4e05e63122f026004d6dbaf50215d3d21d1222
+
     //allows you to navigate back to division selection screen
     private Button back;
 
@@ -86,8 +85,6 @@ public class MarchMadnessGUI extends Application {
     private TournamentInfo teamInfo;
 
 
-=======
-<<<<<<< HEAD
     //Placeholder constructor used to throw an exception if the file
     //TournamentTeamTable uses is not found
     private TournamentTeamTable teamStatsBoard = new TournamentTeamTable();
@@ -96,7 +93,6 @@ public class MarchMadnessGUI extends Application {
     }
 
 
->>>>>>> 2c4e05e63122f026004d6dbaf50215d3d21d1222
     @Override
     public void start(Stage primaryStage) {
         //try to load all the files, if there is an error display it
@@ -244,7 +240,6 @@ public class MarchMadnessGUI extends Application {
 			* adding a button for a page that displays team stats
 		 */
 		private void viewTeamStats() {
-			System.out.println("Test");
 			try {
 				TournamentInfo ti = new TournamentInfo();
 				GridPane pane = new GridPane();
@@ -304,14 +299,7 @@ public class MarchMadnessGUI extends Application {
             bracketPane = new BracketPane(selectedBracket);
             displayPane(bracketPane);
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 2c4e05e63122f026004d6dbaf50215d3d21d1222
-=======
->>>>>>> 2c4e05e63122f026004d6dbaf50215d3d21d1222
     }
 
     /**
@@ -366,7 +354,7 @@ public class MarchMadnessGUI extends Application {
     private void CreateToolBars(){
         toolBar  = new ToolBar();
         btoolBar  = new ToolBar();
-<<<<<<< HEAD
+
         login = new Button("Login");
         simulate = new Button("Simulate");
         scoreBoardButton = new Button("ScoreBoard");
@@ -375,21 +363,11 @@ public class MarchMadnessGUI extends Application {
         clearButton = new Button("Clear");
         resetButton = new Button("Reset");
         finalizeButton = new Button("Finalize");
-=======
-        login=new Button("Login");
-        simulate=new Button("Simulate");
-        scoreBoardButton=new Button("ScoreBoard");
-        viewBracketButton= new Button("View Simulated Bracket");
-        clearButton=new Button("Clear");
-        resetButton=new Button("Reset");
-        finalizeButton=new Button("Finalize");
+
         teamScores = new Button("Team Scores");
 
         logout = new Button("Logout");
-<<<<<<< HEAD
->>>>>>> 2c4e05e63122f026004d6dbaf50215d3d21d1222
-=======
->>>>>>> 2c4e05e63122f026004d6dbaf50215d3d21d1222
+
         toolBar.getItems().addAll(
                 createSpacer(),
                 login,
@@ -406,17 +384,13 @@ public class MarchMadnessGUI extends Application {
                 back=new Button("Choose Division"),
                 teamScores,
                 logout,
-<<<<<<< HEAD
+
                 back = new Button("Choose Division"),
 								teamStats, //@author: Arjun Bott adding new button to toolbar
-=======
->>>>>>> 2c4e05e63122f026004d6dbaf50215d3d21d1222
                 createSpacer()
         );
     }
 
-=======
-<<<<<<< HEAD
     //method attached to the logout button that will log the user out -Justin Lamberson
     //Bug: user and password field not clearing upon use -Justin Lamberson
     private void userLogout(){
@@ -428,7 +402,6 @@ public class MarchMadnessGUI extends Application {
         displayPane(teamStatsBoard.loadTable());
     }
 
->>>>>>> 2c4e05e63122f026004d6dbaf50215d3d21d1222
    /**
     * sets the actions for each button
     */

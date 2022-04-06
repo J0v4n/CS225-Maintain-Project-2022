@@ -69,7 +69,7 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
         return teams.get(teamName);
     }
 
-<<<<<<< HEAD
+
 		/**
 		 * @author: Arjun Bott
 		 * getter for teams HashMap
@@ -77,8 +77,7 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
 		public HashMap<String, Team> getTeams() {
 			return teams;
 		}
-=======
->>>>>>> 2c4e05e63122f026004d6dbaf50215d3d21d1222
+
 
     /**
      * This will be the method that actually does the work of determining the outcome of the games.
