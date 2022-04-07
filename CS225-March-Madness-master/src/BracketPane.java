@@ -235,8 +235,11 @@ public class BracketPane extends BorderPane {
                                 /**
                                  * @update Grant & Tyler
                                  * 			panes are added as ScrollPanes to retain center alignment when moving through full-view and region-view
+                                 * @David Smirnov changed scrollpane to boarderpane
                                  */
-                                center.add(new ScrollPane(panes.get(t)), 0, 0);
+
+                                BorderPane temp = new BorderPane(panes.get(t));
+                                center.add(new BorderPane(temp),0,0);
                                 center.setAlignment(Pos.CENTER);
                                 setCenter(center);
                                 //Grant 5/7 this is for clearing the tree it kind of works

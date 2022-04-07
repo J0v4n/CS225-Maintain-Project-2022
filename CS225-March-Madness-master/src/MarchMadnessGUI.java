@@ -48,7 +48,7 @@ public class MarchMadnessGUI extends Application {
     private Button login;
     private Button scoreBoardButton;
     private Button viewBracketButton;
-		private Button teamStats; // @author: Arjun Bott
+
     private Button clearButton;
     private Button resetButton;
     private Button finalizeButton;
@@ -87,7 +87,7 @@ public class MarchMadnessGUI extends Application {
 
     //Placeholder constructor used to throw an exception if the file
     //TournamentTeamTable uses is not found
-    private TournamentTeamTable teamStatsBoard = new TournamentTeamTable();
+
 
     //the password field is declared here to make the logout button work correctly
     private PasswordField passwordField;
@@ -125,6 +125,9 @@ public class MarchMadnessGUI extends Application {
         login();
 
         setActions();
+        //@David set full screen
+        primaryStage.setResizable(false);
+        primaryStage.setFullScreen(true);
         root.setTop(toolBar);
         root.setBottom(btoolBar);
         Scene scene = new Scene(root);
@@ -238,43 +241,7 @@ public class MarchMadnessGUI extends Application {
 		}
 
     }
-		/**
-			* @author: Arjun Bott
-			* adding a button for a page that displays team stats
-		 */
-		private void viewTeamStats() {
-			try {
-				TournamentInfo ti = new TournamentInfo();
-				GridPane pane = new GridPane();
-				pane.setHgap(15.0d);
-				pane.setVgap(15.0d);
-				pane.add(new Text("School Name"), 0, 0);
-				pane.add(new Text("Team Name"), 1, 0);
-				pane.add(new Text("National Rank"), 2, 0);
-				pane.add(new Text("Offensive PPG"), 3, 0);
-				pane.add(new Text("Defensive PPG"), 4, 0);
-				pane.add(new Text("Description"), 5, 0);
-				pane.add(new Text(""), 0, 1);
-				int i = 2;
-				for (Team team : ti.getTeams().values()) {
-					// node, column index, row index
-					// pane.add(new Text(team.get), );
-					pane.add(new Text(team.getName()), 0, i);
-					pane.add(new Text(team.getNickname()), 1, i);
-					pane.add(new Text(team.getRanking() + ""), 2, i);
-					pane.add(new Text(team.getOffensePPG() + ""), 3, i);
-					pane.add(new Text(team.getDefensePPG() + ""), 4, i);
-					pane.add(new Text(team.getInfo()), 5, i);
-					i++;
-				}
 
-
-				displayPane(new ScrollPane(pane));
-			}
-			catch (IOException e) {
-				System.err.println(e.getMessage());
-			}
-		}
 
     /**
      * allows user to choose bracket
@@ -362,7 +329,6 @@ public class MarchMadnessGUI extends Application {
         simulate = new Button("Simulate");
         scoreBoardButton = new Button("ScoreBoard");
         viewBracketButton = new Button("View Simulated Bracket");
-				teamStats = new Button("Team Statistics"); // @author: Arjun Bott new button instantiated for team statistics
         clearButton = new Button("Clear");
         resetButton = new Button("Reset");
         finalizeButton = new Button("Finalize");
@@ -387,7 +353,6 @@ public class MarchMadnessGUI extends Application {
                 back=new Button("Choose Division"),
                 teamScores,
                 logout,
-				teamStats, //@author: Arjun Bott adding new button to toolbar
                 createSpacer()
         );
     }
@@ -399,9 +364,7 @@ public class MarchMadnessGUI extends Application {
         login();
     }
 
-    private void displayTeamInfo(){
-        displayPane(teamStatsBoard.loadTable());
-    }
+
 
    /**
     * sets the actions for each button
@@ -411,7 +374,6 @@ public class MarchMadnessGUI extends Application {
         simulate.setOnAction(e->simulate());
         scoreBoardButton.setOnAction(e->scoreBoard());
         viewBracketButton.setOnAction(e->viewBracket());
-				teamStats.setOnAction(e->viewTeamStats());// @author: Arjun Bott
         clearButton.setOnAction(e->clear());
         resetButton.setOnAction(e->reset());
         finalizeButton.setOnAction(e->finalizeBracket());
@@ -420,7 +382,7 @@ public class MarchMadnessGUI extends Application {
             displayPane(bracketPane);
         });
         logout.setOnAction(e->userLogout());
-        teamScores.setOnAction(e->displayTeamInfo());
+
     }
 
     /**
